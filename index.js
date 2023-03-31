@@ -13,7 +13,8 @@ let todos;
 
 // DB
 async function main() {
-  const url = "mongodb+srv://verdant:adaneitor1998@todo-db.26yb97f.mongodb.net/?retryWrites=true&w=majority";
+  const url =
+    "mongodb+srv://verdant:adaneitor1998@todo-db.26yb97f.mongodb.net/?retryWrites=true&w=majority";
 
   await mongoose.connect(url);
 
@@ -27,19 +28,24 @@ async function main() {
 main().catch(console.error);
 
 app.get("/", (req, res) => {
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.send("My first server solo on Express.js");  
-})
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+  res.send("My first server solo on Express.js");
+});
 
 // Obtener todas las tareas
 
 app.get("/todos", async (req, res) => {
-  const todoList = await todos.find();
-  if(!todoList) {
-    return;
+  if (!todos) {
+    // manejar el caso en que todos es undefined
+    res.status(404).send("No data on database")
+  } else {
+    const todoList = await todos.find();
+    if (!todoList) {
+      return;
+    }
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+    res.json(todoList);
   }
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-  res.json(todoList);
 });
 
 // Agregar una tarea
