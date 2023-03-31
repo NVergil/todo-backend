@@ -26,6 +26,11 @@ async function main() {
 
 main().catch(console.error);
 
+app.get("/", (req, res) => {
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.send("My first server solo on Express.js");  
+})
+
 // Obtener todas las tareas
 
 app.get("/todos", async (req, res) => {
