@@ -11,7 +11,6 @@ app.use(express.json());
 // app.use(morgan("dev"));
 
 let todos;
-// console.log(process.env.MONGODB_URI);
 // DB
 async function main() {
   try {
@@ -39,11 +38,17 @@ app.get("/", (req, res) => {
 // Obtener todas las tareas
 
 app.get("/todos", async (req, res) => {
+  if (!todos) {
+    // manejar el caso en que todos es undefined
+    res.status(404).send("No data on database")
+  } else {
     const todoList = await todos.find();
     if (!todoList) {
       return;
     }
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
     res.json(todoList);
+  }
 });
 
 // Agregar una tarea
