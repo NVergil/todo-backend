@@ -13,7 +13,7 @@ let todos;
 
 // DB
 async function main() {
-  const url = "mongodb://127.0.0.1:27017/todo-list-db";
+  const url = "mongodb+srv://verdant:adaneitor1998@todo-db.26yb97f.mongodb.net/?retryWrites=true&w=majority";
 
   await mongoose.connect(url);
 
