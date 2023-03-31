@@ -15,8 +15,7 @@ let todos;
 async function main() {
   try {
 
-    const url =
-      "mongodb+srv://verdant:adaneitor1998@todo-db.26yb97f.mongodb.net/?retryWrites=true&w=majority";
+    const url = process.env.MONGODB_URI;
   
     await mongoose.connect(url);
   
