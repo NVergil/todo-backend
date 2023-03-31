@@ -13,16 +13,21 @@ let todos;
 
 // DB
 async function main() {
-  const url =
-    "mongodb+srv://verdant:adaneitor1998@todo-db.26yb97f.mongodb.net/?retryWrites=true&w=majority";
+  try {
 
-  await mongoose.connect(url);
-
-  const noteSchema = new mongoose.Schema({
-    description: String,
-  });
-
-  todos = mongoose.model("todos", noteSchema);
+    const url =
+      "mongodb+srv://verdant:adaneitor1998@todo-db.26yb97f.mongodb.net/?retryWrites=true&w=majority";
+  
+    await mongoose.connect(url);
+  
+    const noteSchema = new mongoose.Schema({
+      description: String,
+    });
+  
+    todos = mongoose.model("todos", noteSchema);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 main().catch(console.error);
