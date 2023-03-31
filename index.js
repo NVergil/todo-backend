@@ -33,6 +33,7 @@ app.get("/todos", async (req, res) => {
   if(!todoList) {
     return;
   }
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
   res.json(todoList);
 });
 
@@ -67,3 +68,5 @@ app.delete("/todos/:id", async (req, res) => {
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
+
+module.exports = app;
