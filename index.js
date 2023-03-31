@@ -12,10 +12,9 @@ app.use(express.json());
 
 let todos;
 // DB
-async function main() {
+const connectDB = async () => {
   try {
     const url = process.env.MONGODB_URI;
-  
     await mongoose.connect(url);
   
     const noteSchema = new mongoose.Schema({
@@ -27,8 +26,6 @@ async function main() {
     console.error(err);
   }
 }
-
-main().catch(console.error);
 
 app.get("/", (req, res) => {
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
@@ -79,8 +76,10 @@ app.delete("/todos/:id", async (req, res) => {
   res.json({ message: `Tarea con id ${_id} eliminada` });
 });
 
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
-});
+connectDB().then(() => {
+  app.listen(port, () => {
+    console.log(`listening on port ${port}`);
+  });
+})
 
 module.exports = app;
