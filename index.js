@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const mongoose = require("mongoose");
 // const morgan = require("morgan");
@@ -10,11 +11,10 @@ app.use(express.json());
 // app.use(morgan("dev"));
 
 let todos;
-
+// console.log(process.env.MONGODB_URI);
 // DB
 async function main() {
   try {
-
     const url = process.env.MONGODB_URI;
   
     await mongoose.connect(url);
